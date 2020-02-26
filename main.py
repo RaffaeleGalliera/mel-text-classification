@@ -8,6 +8,7 @@ import spacy
 import inquirer
 import os
 import sys
+import nlpaug.augmenter.word as naw
 from tensorboardX import SummaryWriter
 from torchsummary import summary
 from torchtext import data
@@ -24,6 +25,7 @@ if os.path.isfile('ezmath-model.pt'):
                'Make Prediction',
                'Plot embedding space - TensorboardX',
                'Print model details',
+               'Test Textual Augmenter by word2vec similarity',
                'Train model',
                'Exit']
 else:
@@ -119,5 +121,17 @@ while answers.get('choice') != 'Exit':
         test_loss, test_acc = train.evaluate_with_pr_plotting(model, test_iterator, criterion, dataset.LABEL.vocab.itos)
         print(f'Test Loss: {test_loss:.3f} | Test Acc: {test_acc * 100:.3f}%')
         print('Remember to run Tensorboard thru: tensorboard --logdir=tensorboard')
+
+    if answers.get('choice') == 'Test Textual Augmenter by word2vec similarity':
+        print('Loading Word2Vec model...')
+        aug = naw.WordEmbsAug(
+            model_type='word2vec', model_path='vector_cache/word2vec_CoNLL17/model.bin',
+            action="substitute")
+        text = input("Please insert the exercise text to augment: ")
+        augmented_text = aug.augment(text)
+        print("Original:")
+        print(text)
+        print("Augmented Text:")
+        print(augmented_text)
 
     answers = inquirer.prompt(questions)
