@@ -5,6 +5,7 @@ import torchtext.vocab as vocab
 import inquirer
 import os
 import json
+import string
 
 
 def load_dataset():
@@ -30,13 +31,18 @@ def load_dataset():
             for filename in os.listdir(folder):
                 file = os.path.join(folder, filename)
                 with open(file) as fh:
-                    description = fh.read().strip().split()
+                    description = fh.read()
 
-                    dict1[dict_fields[0]] = description
+                    # punctuations = '''!()-[]{};:'"\,<>/@#$%^&*_~'''
+                    for x in description.lower():
+                        if x in string.punctuation:
+                            description = description.replace(x, "")
+
+                    dict1[dict_fields[0]] = description.strip().split()
                     dict1[dict_fields[1]] = test
 
                     out_file = open(f'data/{root_folder}.json', "a+")
-                    json.dump(dict1, out_file)
+                    json.dump(dict1, out_file, ensure_ascii=False)
                     out_file.write('\n')
                     out_file.close()
 
