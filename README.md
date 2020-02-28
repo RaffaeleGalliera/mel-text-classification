@@ -1,21 +1,30 @@
 # A CNN that categorizes Math exercises
-Work in progress repository that implements Multi-Class Text Classification Using CNN (Convolutional Neural Network) made for a [Deep Learning university exam](http://www.unife.it/ing/lm.infoauto/deep-learning/scheda-insegnamento-1/en) using [PyTorch](https://github.com/pytorch/pytorch), [TorchText](https://github.com/pytorch/text) and Python 3.7.
-It also integrates [TensorboardX](https://github.com/lanpa/tensorboardX) a module for visualization with Google’s tensorflow’s tensorboard for PyTorch, a web server to serve visualizations of the training progress of a neural network. 
-TensorboardX is used in order to visualize embedding, PR and Loss/Accuracy curves. 
+Work in progress repository that implements Multi-Class Text Classification Using CNN (Convolutional Neural Network) made for a [Deep Learning university exam](http://www.unife.it/ing/lm.infoauto/deep-learning/scheda-insegnamento-1/en) using [PyTorch](https://github.com/pytorch/pytorch) 1.3, [TorchText](https://github.com/pytorch/text) 0.5 and Python 3.7.
+It also integrates [TensorboardX](https://github.com/lanpa/tensorboardX) a module for visualization with Google’s tensorflow’s Tensorboard ( a web server to serve visualizations of the training progress of a neural network). 
+TensorboardX gives us the possibility to visualize embeddings, PR and Loss/Accuracy curves. 
 
-I've started from [this awesome tutorial](https://github.com/bentrevett/pytorch-sentiment-analysis) that perfectly shows how to perform sentiment analysis with PyTorch.
+I've started this project following [this awesome tutorial](https://github.com/bentrevett/pytorch-sentiment-analysis) that perfectly shows how to perform sentiment analysis with PyTorch.
 
-The achievement of this particular application of a [convolutional neural network](https://arxiv.org/abs/1408.5882) (CNN) model to Text Classification is to being able to categorize 7 different classes of Italian Math/Calculus exercises, using a small, but balanced dataset.
+The achievement of this particular application of [convolutional neural networks](https://arxiv.org/abs/1408.5882) to Text Classification is to being able to categorize 7 different classes of Italian Math/Calculus exercises, using a small, but balanced dataset.
 For example, given a 4D optimization Calculus exercise to the input, the NN should be able to categorize that exercise as a 4D optimization problem.
 
+## Feats
 
+- Export datasets with a folder hierarchy (eg. test/label_1/point.txt) from txt to JSON files (with TEXT and LABEL as fields)
+- Import custom datasets
+- Train, evaluate and save model's state
+- Make a prediction from user's input
+- Print infos about dataset and model
+- Test NLPAug a library for Data Augmentation in NLP
+- Plot Accuracy, Loss and PR curves - TensorboardX 
+- Visualize the embedding space projection - TensorboardX 
 
 
 ## Getting Started
 
 To install PyTorch, see installation instructions on the [PyTorch website](pytorch.org).
 
-To install TorchText, Inquirer, TorchSummary and TensorboardX:
+Install TorchText, Inquirer, TorchSummary* and TensorboardX:
 
 ``` bash
 pip install inquirer
@@ -30,7 +39,7 @@ pip install torchtext
 python -m spacy download it_core_news_sm
 ```
 
-I've used two different embeddings - to build the vocab and load the pre-trained word embeddings - you can download them here:
+I've tried two different embeddings - to build the vocab and load the pre-trained word embeddings - you can download them here:
 - [Human Language Technologies - CNR](http://hlt.isti.cnr.it/wordembeddings/)
 - [Suggested] [Italian CoNLL17 corpus](http://vectors.nlpl.eu/repository/) (filtering by language) 
 
@@ -40,12 +49,29 @@ For example:
 vectors = vocab.Vectors(name='model.txt', cache='vector_cache/word2vec_CoNLL17')
 ```
 
-I'd anyway suggest to use Word2Vec models as I've found them easier to integrate with libraries such [nlpaug - Data Augmentation for NLP](https://github.com/makcedward/nlpaug) (Not used atm)
+I'd anyway suggest to use Word2Vec models as I've found them easier to integrate with libraries such [nlpaug - Data Augmentation for NLP](https://github.com/makcedward/nlpaug) 
 
 After have performed any TensorboardX related operation remember to run 
 ``` bash
  tensorboard --logdir=tensorboard    
 ```
+
+
+ **Due to a Torchsummary [issue with embeddings](https://github.com/sksq96/pytorch-summary/issues/42) you should change the dtype from FloatTensor to LongTensor in its source file in order to have the summary of the model in a Keras-like way**
+
+
+## TensorboardX examples
+
+### Embeddings
+![Embedding Space](images/tensorboard_examples/embedding_1.png)
+
+![Embedding Space](images/tensorboard_examples/embedding_2.png)
+
+### Accuracy and Loss curves
+![Acc/Loss Curves](images/tensorboard_examples/acc_loss_curves.png)
+
+### PR curves
+![PR Curves](images/tensorboard_examples/pr_curves.png)
 
 ## References
 
