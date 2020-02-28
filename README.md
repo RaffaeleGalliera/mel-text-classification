@@ -1,6 +1,6 @@
-# A CNN that categorizes Math exercises
-Work in progress repository that implements Multi-Class Text Classification Using CNN (Convolutional Neural Network) made for a [Deep Learning university exam](http://www.unife.it/ing/lm.infoauto/deep-learning/scheda-insegnamento-1/en) using [PyTorch](https://github.com/pytorch/pytorch) 1.3, [TorchText](https://github.com/pytorch/text) 0.5 and Python 3.7.
-It also integrates [TensorboardX](https://github.com/lanpa/tensorboardX) a module for visualization with Google’s tensorflow’s Tensorboard ( a web server to serve visualizations of the training progress of a neural network). 
+#CNNs applied to Math Exercises classification
+Work in progress repository that implements Multi-Class Text Classification using a CNN (Convolutional Neural Network)  for a [Deep Learning university exam](http://www.unife.it/ing/lm.infoauto/deep-learning/scheda-insegnamento-1/en) using [PyTorch](https://github.com/pytorch/pytorch) 1.3, [TorchText](https://github.com/pytorch/text) 0.5 and Python 3.7.
+It also integrates [TensorboardX](https://github.com/lanpa/tensorboardX), a module for visualization with Google’s tensorflow’s Tensorboard (web server to serve visualizations of the training progress of a neural network). 
 TensorboardX gives us the possibility to visualize embeddings, PR and Loss/Accuracy curves. 
 
 I've started this project following [this awesome tutorial](https://github.com/bentrevett/pytorch-sentiment-analysis) that perfectly shows how to perform sentiment analysis with PyTorch.
@@ -19,6 +19,41 @@ For example, given a 4D optimization Calculus exercise to the input, the NN shou
 - Plot Accuracy, Loss and PR curves - TensorboardX 
 - Visualize the embedding space projection - TensorboardX 
 
+
+## Model summary
+
+```batch
+Embedding dimension: 100 
+N. of filters: 400 
+Vocab dimension: 4363 
+Filter Sizes = [2, 3, 4]
+Batch Size = 32
+Categories:
+   3D geometric figures in spatial diagrams
+   arithmetic
+   crypto-arithmetic
+   numbers in spatial diagrams
+   temporal reasoning
+   spatial reasoning
+   geometric figures in spatial diagrams OR puzzle
+===================================================
+Layer (type)         Output Shape         Param 
+===================================================
+Embedding-1          [-1, 32, 100]        436,300
+Conv2d-2           [-1, 400, 31, 1]         80,400
+Conv2d-3           [-1, 400, 30, 1]        120,400
+Conv2d-4           [-1, 400, 29, 1]        160,400
+Dropout-5                [-1, 1200]              0
+Linear-6                    [-1, 7]          8,407
+===================================================
+Total params: 805,907
+Trainable params: 805,907
+Non-trainable params: 0
+
+Best Test Loss achieved: 0.654
+Best Test Accuracy achieved: 83.33%
+
+```
 
 ## Getting Started
 
