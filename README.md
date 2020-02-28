@@ -1,4 +1,5 @@
-#CNNs applied to Math Exercises classification
+# CNNs applied to Math Exercises classification
+
 Work in progress repository that implements Multi-Class Text Classification using a CNN (Convolutional Neural Network)  for a [Deep Learning university exam](http://www.unife.it/ing/lm.infoauto/deep-learning/scheda-insegnamento-1/en) using [PyTorch](https://github.com/pytorch/pytorch) 1.3, [TorchText](https://github.com/pytorch/text) 0.5 and Python 3.7.
 It also integrates [TensorboardX](https://github.com/lanpa/tensorboardX), a module for visualization with Google’s tensorflow’s Tensorboard (web server to serve visualizations of the training progress of a neural network). 
 TensorboardX gives us the possibility to visualize embeddings, PR and Loss/Accuracy curves. 
