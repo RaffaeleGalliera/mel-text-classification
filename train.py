@@ -16,12 +16,12 @@ def train_and_evaluate(model, train_iterator, valid_iterator, optimizer, criteri
 
         start_time = time.time()
 
-        train_loss, train_acc = __train(model, train_iterator, optimizer, criterion, writer)
+        train_loss, train_acc = train(model, train_iterator, optimizer, criterion, writer)
         valid_loss, valid_acc = evaluate(model, valid_iterator, criterion)
 
         end_time = time.time()
 
-        epoch_mins, epoch_secs = __epoch_time(start_time, end_time)
+        epoch_mins, epoch_secs = epoch_time(start_time, end_time)
 
         if valid_loss < best_valid_loss:
             best_valid_loss = valid_loss
@@ -51,7 +51,7 @@ def evaluate(model, iterator, criterion):
 
             loss = criterion(predictions, batch.label)
 
-            acc = __categorical_accuracy(predictions, batch.label)
+            acc = categorical_accuracy(predictions, batch.label)
 
             epoch_loss += loss.item()
             epoch_acc += acc.item()
@@ -76,7 +76,7 @@ def evaluate_with_pr_plotting(model, iterator, criterion, classes):
 
             loss = criterion(predictions, batch.label)
 
-            acc = __categorical_accuracy(predictions, batch.label)
+            acc = categorical_accuracy(predictions, batch.label)
 
             epoch_loss += loss.item()
             epoch_acc += acc.item()
@@ -111,7 +111,7 @@ def evaluate_with_pr_plotting(model, iterator, criterion, classes):
     return epoch_loss / len(iterator), epoch_acc / len(iterator)
 
 
-def __train(model, iterator, optimizer, criterion, writer):
+def train(model, iterator, optimizer, criterion, writer):
     epoch_loss = 0
     epoch_acc = 0
 
@@ -124,7 +124,7 @@ def __train(model, iterator, optimizer, criterion, writer):
 
         loss = criterion(predictions, batch.label)
 
-        acc = __categorical_accuracy(predictions, batch.label)
+        acc = categorical_accuracy(predictions, batch.label)
 
         loss.backward()
 
@@ -136,14 +136,14 @@ def __train(model, iterator, optimizer, criterion, writer):
     return epoch_loss / len(iterator), epoch_acc / len(iterator)
 
 
-def __epoch_time(start_time, end_time):
+def epoch_time(start_time, end_time):
     elapsed_time = end_time - start_time
     elapsed_mins = int(elapsed_time / 60)
     elapsed_secs = int(elapsed_time - (elapsed_mins * 60))
     return elapsed_mins, elapsed_secs
 
 
-def __categorical_accuracy(preds, y):
+def categorical_accuracy(preds, y):
     """
     Returns accuracy per batch, i.e. if you get 8/10 right, this returns 0.8, NOT 8
     """

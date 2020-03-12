@@ -82,10 +82,11 @@ train_data, valid_data, test_data = data.TabularDataset.splits(
 
 MAX_VOCAB_SIZE = 25_000
 
+# Necessary code for Glove models to be converted to w2c
 # model = gensim.models.Word2Vec.load('home/berardi/glove_WIKI')
 # model.wv.save_word2vec_format('vector_cache/glove_WIKI_w2v/wv_cnr_ITA')
-
 # vectors = vocab.Vectors(name='wv_cnr_ITA', cache='vector_cache/glove_WIKI_w2v/')
+
 vectors = vocab.Vectors(name='model.txt', cache='vector_cache/word2vec_CoNLL17')
 
 TEXT.build_vocab(train_data,
